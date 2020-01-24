@@ -1,4 +1,24 @@
-import { User, sequelize } from './db/models' ;
+import { User, Task } from './db/models';
 
-User.findAll( {} ).then( data => console.log( data.map( user => user.toJSON() ) ) );
+async function getUsersWithTasks () {
+  try {
+    const result = User.findAll( {
 
+                                   attributes: {
+                                     exclude: ['password']
+                                   },
+                                   include: [
+                                     {
+                                       model: Task
+                                     }
+                                   ]
+                                 } );
+
+    return result.map( item => item.get() );
+  } catch (e) {
+
+  }
+}
+
+getUsersWithTasks()
+  .then( console.log );

@@ -44,18 +44,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {} );
 
   User.associate = function (models) {
-    /*
-    hasMany
-    hasOne
-    belongTo
-    belongToMany
-     */
     User.hasMany( models.Task, {
       foreignKey: {
-        field: 'userId',
+        field: 'userId',// UserId
       },
-
-
+      as: 'tasks'
     } );
   };
   return User;

@@ -37,8 +37,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       field: 'passwordHash',
-      set (val) {
-        this.setDataValue( 'password', bcrypt.hash( val, 10 ) );
+      set (value) {
+        // Storing passwords in plaintext in the database is terrible.
+        // Hashing the value with an appropriate cryptographic hash function is better.
+        this.setDataValue( 'password', bcrypt.hashSync( value, 10 ) );
       }
     }
   }, {} );

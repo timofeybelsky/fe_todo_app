@@ -10,7 +10,8 @@ module.exports = {
     migrationStorage: 'json',
     seederStorage: 'json',
     dialectOptions: {
-      decimalNumbers: true
+      decimalNumbers: true,
+      parseFloat: true,
     }
   },
   test: {},

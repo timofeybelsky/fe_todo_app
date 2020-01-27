@@ -1,41 +1,28 @@
-import { CreditCard, sequelize } from './db/models';
+import express  from 'express';
+import { User } from './db/models';
 
-async function transaction (fromCardId, toCardId, value) {
+const PORT = process.env.PORT || 5000;
+const app = express();
+app.use( express.json() );
+
+app.get( '/', (req, res) => res.send( 'Hello World!' ) );
+
+app.post( '/user', async (req, res, next) => {
   try {
 
-    const fromCard = await CreditCard.findByPk( fromCardId );
-    const toCard = await CreditCard.findByPk( toCardId );
+    const createdUser = await User.create( req.body );
 
-    console.group( 'Before' );
-    console.log( fromCard.get() );
-    console.log( toCard.get() );
-    console.groupEnd();
-
-    const t = await sequelize.transaction();
-
-    fromCard.balance -= value;
-    const updatedFromCard = await fromCard.save( {
-                                                   transaction: t,
-                                                 } );
-
-    toCard.balance = +toCard.balance + value;
-    const updatedToCard = await toCard.save(
-      {
-        transaction: t,
-      }
-    );
-
-    await t.commit();
-
-    console.group( 'After' );
-    console.log( updatedFromCard.get() );
-    console.log( updatedToCard.get() );
-    console.groupEnd();
+    return res.send( createdUser );
 
   } catch (e) {
-    console.error( e );
+    next( e );
   }
-}
+} );
 
-transaction( 1, 2, 100 );
+app.use( (err, req, res) => {
 
+  res.status( 500 ).send( 'Something broke!' );
+
+} );
+
+app.listen( PORT, () => console.log( `Example app listening on port ${PORT}!` ) );

@@ -1,24 +1,9 @@
-import { User, Task } from './db/models';
+import express from 'express';
+import router from './routes';
 
-async function getUsersWithTasks () {
-  try {
-    const result = User.findAll( {
+const PORT = process.env.PORT;
+const app = express();
+app.use( express.json() );
+app.use( router );
 
-                                   attributes: {
-                                     exclude: ['password']
-                                   },
-                                   include: [
-                                     {
-                                       model: Task
-                                     }
-                                   ]
-                                 } );
-
-    return result.map( item => item.get() );
-  } catch (e) {
-
-  }
-}
-
-getUsersWithTasks()
-  .then( console.log );
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));

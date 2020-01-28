@@ -1,6 +1,7 @@
 'use strict';
 
 import bcrypt from 'bcrypt';
+import { LOGIN_PATTERN } from '../../constants';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define( 'User', {
@@ -30,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false,
       validate: {
+        is: LOGIN_PATTERN,
         len: [6, 16],
       }
     },
@@ -37,27 +39,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       field: 'passwordHash',
-      set (val) {
-        this.setDataValue( 'password', bcrypt.hash( val, 10 ) );
+      set (value) {
+        // Storing passwords in plaintext in the database is terrible.
+        // Hashing the value with an appropriate cryptographic hash function is better.
+        this.setDataValue( 'password', bcrypt.hashSync( value, 10 ) );
       }
     }
   }, {} );
 
   User.associate = function (models) {
-    /*
-    hasMany
-    hasOne
-    belongTo
-    belongToMany
-     */
     User.hasMany( models.Task, {
       foreignKey: {
-        field: 'userId',
+        field: 'userId',// UserId
       },
-
-
+      as: 'tasks'
     } );
   };
   return User;
 };
-

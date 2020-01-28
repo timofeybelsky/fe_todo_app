@@ -8,7 +8,11 @@ module.exports = {
     host: process.env.DB_HOST,
     dialect: 'postgres',
     migrationStorage: 'json',
-    seederStorage: 'json'
+    seederStorage: 'json',
+    dialectOptions: {
+      decimalNumbers: true,
+      parseFloat: true,
+    }
   },
   test: {},
   production: {}

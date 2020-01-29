@@ -11,7 +11,8 @@ userRouter.post( '/',
 userRouter.patch( '/:userId', validateUserOnUpdate,
                   updateUserByPk
 );
-userRouter.get( '/', getUserByPk );
-userRouter.delete( '/', deleteUserByPk );
+userRouter.get( '/:userId', getUserByPk );
+
+userRouter.delete( '/:userId', deleteUserByPk );
 
 export default userRouter;

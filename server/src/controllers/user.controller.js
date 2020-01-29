@@ -40,7 +40,16 @@ export async function updateUserByPk (req, res, next) {
 
 export async function getUserByPk (req, res, next) {
   try {
+    const foundUser = await User.findByPk( req.params.userId, {
+      attributes: {
+        exclude: ['password']
+      }
+    } );
+    if (foundUser) {
 
+      return res.send( foundUser );
+    }
+    next( 'Resource not found!' );
   } catch (e) {
     next( e );
   }
@@ -49,6 +58,15 @@ export async function getUserByPk (req, res, next) {
 
 export async function deleteUserByPk (req, res, next) {
   try {
+    const deletedRowsCount = await User.destroy( {
+                                                   where: {
+                                                     id: req.params.userId
+                                                   }
+                                                 } );
+    if (deletedRowsCount) {
+      res.send( `${deletedRowsCount}` );
+    }
+    next( 'Resource not found!' );
 
   } catch (e) {
     next( e );

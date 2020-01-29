@@ -1,13 +1,15 @@
+import { createUserSchema, updateUserSchema } from '../../utils/validation/user.js';
+
 export default async function validateUser (req, res, next) {
   try {
 
-    valid = true;
+    req.body = await (req.method.toUpperCase() === 'POST'
+                      ? createUserSchema
+                      : updateUserSchema).validateAsync( req.body );
 
-    if (valid) {
-      return next();
-    }
-    next(new Error());
+    next();
   } catch (e) {
-    next(e);
+
+    next( e );
   }
 }

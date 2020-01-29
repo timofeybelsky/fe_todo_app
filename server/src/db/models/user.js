@@ -1,6 +1,6 @@
 'use strict';
 
-import bcrypt from 'bcrypt';
+import bcrypt            from 'bcrypt';
 import { LOGIN_PATTERN } from '../../constants';
 
 module.exports = (sequelize, DataTypes) => {

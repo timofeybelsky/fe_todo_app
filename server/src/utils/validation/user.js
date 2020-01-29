@@ -23,6 +23,5 @@ export default Joi.object( {
                              password: passwordSchema.when( '$isCreateMode', {
                                then: passwordSchema.required(),
                              } ),
-
                            } ).min( 1 ).max( 5 );
 

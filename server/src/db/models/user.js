@@ -1,22 +1,23 @@
 'use strict';
 
-import bcrypt            from 'bcrypt';
-import { LOGIN_PATTERN } from '../../constants';
+import bcrypt                          from 'bcrypt';
+import { LOGIN_PATTERN, NAME_PATTERN } from '../../constants';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define( 'User', {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+
       validate: {
-        isAlpha: true,
+        is: NAME_PATTERN,
       }
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true,
+        is: NAME_PATTERN,
       }
     },
     email: {

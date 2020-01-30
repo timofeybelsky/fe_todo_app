@@ -13,7 +13,6 @@ export async function createUser (req, res, next) {
     next( new Error() );
 
   } catch (e) {
-
     next( e );
   }
 }

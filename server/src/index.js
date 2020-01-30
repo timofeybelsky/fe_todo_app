@@ -1,6 +1,7 @@
-import express      from 'express';
-import cors         from 'cors';
-import router       from './routes';
+import express                 from 'express';
+import cors                    from 'cors';
+import router                  from './routes';
+import applicationErrorHandler from './middlewares/applicationErrorHandler.js';
 
 /*
  * define server port
@@ -22,11 +23,15 @@ app.use( express.json() );
  * enable routing
  * */
 app.use( router );
-/*
- * listening port
- * */
 
+/*
+ * error handling
+ * */
+app.use( applicationErrorHandler );
 app.use( (err, req, res) => {
   res.status( 500 ).send( 'Internal server error!' );
 } );
+/*
+ * listening port
+ * */
 app.listen( PORT, () => console.log( `Example app listening on port ${PORT}!` ) );

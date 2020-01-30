@@ -33,6 +33,7 @@ app.use( router );
  * */
 app.use( errorHandlers.applicationErrorHandler );
 app.use( errorHandlers.validationErrorHandler );
+app.use( errorHandlers.sequelizeErrorHandler );
 app.use( (err, req, res) => {
   res.status( 500 ).send( 'Internal server error!' );
 } );

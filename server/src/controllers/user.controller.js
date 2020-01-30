@@ -1,4 +1,5 @@
-import { User } from './../db/models';
+import { User }  from './../db/models';
+import AppErrors from '../utils/applicationErrors';
 
 export async function createUser (req, res, next) {
   try {
@@ -10,7 +11,7 @@ export async function createUser (req, res, next) {
       return res.status( 201 ).send( userData );
     }
 
-    next( new Error() );
+    next( new AppErrors.BadRequestError() );
 
   } catch (e) {
     next( e );
@@ -30,7 +31,7 @@ export async function updateUserByPk (req, res, next) {
       delete data.password;
       return res.send( data );
     }
-    next( 'Resource not found!' );
+    next( new AppErrors.NotFoundError( 'User' ) );
   } catch (e) {
     next( e );
   }
@@ -48,7 +49,7 @@ export async function getUserByPk (req, res, next) {
 
       return res.send( foundUser );
     }
-    next( 'Resource not found!' );
+    next( new AppErrors.NotFoundError( 'User' ) );
   } catch (e) {
     next( e );
   }
@@ -63,9 +64,9 @@ export async function deleteUserByPk (req, res, next) {
                                                    }
                                                  } );
     if (deletedRowsCount) {
-      res.send( `${deletedRowsCount}` );
+      return res.send( `${deletedRowsCount}` );
     }
-    next( 'Resource not found!' );
+    next( new AppErrors.NotFoundError( 'User' ) );
 
   } catch (e) {
     next( e );

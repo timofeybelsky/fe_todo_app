@@ -1,10 +1,10 @@
-import userSchema from '../../utils/validation/user.js';
+import schemas from '../../utils/validation';
 
 function createUserValidationMW (isCreateMode = true) {
 
   return async (req, res, next) => {
     try {
-      req.body = await userSchema.validateAsync( req.body, {
+      req.body = await schemas.userSchema.validateAsync( req.body, {
         context: {
           isCreateMode,
         }

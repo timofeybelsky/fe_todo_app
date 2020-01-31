@@ -1,3 +1,5 @@
+import appErrors from '../../utils/applicationErrors';
+
 /**
  *
  * @param {EntityType} entity
@@ -8,6 +10,7 @@ export default (entity) => {
     return (req, res, next) => {
       try {
 
+        next( new appErrors.ForbiddenError() );
       } catch (e) {
         next( e );
       }

@@ -1,12 +1,12 @@
 import express                from 'express';
 import AppErrors              from '../utils/applicationErrors';
-import userRouter             from './user.router.js';
-import checkUserAuthorization from '../middlewares/authorization/checkUserAuthorization.js';
-import taskRouter             from './task.router.js';
+import userRouter         from './user.router.js';
+import checkAuthorization from '../middlewares/authorization/checkAuthorization.js';
+import taskRouter         from './task.router.js';
 
 const router = express.Router();
 
-router.use( checkUserAuthorization );
+router.use( checkAuthorization );
 
 router.use( '/user', userRouter );
 router.use( '/task', taskRouter );

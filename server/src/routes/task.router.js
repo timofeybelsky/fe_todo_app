@@ -1,7 +1,7 @@
-import express             from 'express';
-import createValidationMW  from '../middlewares/validation/createValidationMW.js';
-import schemas             from '../utils/validation';
-import * as TaskController from '../controllers/task.controller.js';
+import express            from 'express';
+import createValidationMW from '../middlewares/validation/createValidationMW.js';
+import schemas            from '../utils/validation';
+import TaskController     from '../controllers/task.controller.js';
 
 const taskRouter = express.Router();
 

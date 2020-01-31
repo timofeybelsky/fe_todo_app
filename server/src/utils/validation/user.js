@@ -16,7 +16,7 @@ export default Joi.object( {
                              lastName: nameSchema.label( 'Last name' ).when( '$isCreateMode', {
                                then: nameSchema.required(),
                              } ),
-                             email: emailSchema.label( 'Email' ),
+                             email: emailSchema.label( 'Email' ).optional(),
                              login: loginSchema.label( 'Login' ).when( '$isCreateMode', {
                                then: loginSchema.required(),
                              } ),

@@ -29,3 +29,17 @@ export const ENTITY = {
   USER: Symbol( 'USER' ),
   TASK: Symbol( 'TASK' ),
 };
+
+/**
+ * @typedef {string} RoleType
+ */
+
+/**
+ *@readonly
+ * @enum {RoleType}
+ */
+export const ROLE = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
+};

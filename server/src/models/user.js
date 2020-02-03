@@ -1,7 +1,7 @@
 'use strict';
 
 import bcrypt                          from 'bcrypt';
-import { LOGIN_PATTERN, NAME_PATTERN } from '../../constants';
+import { LOGIN_PATTERN, NAME_PATTERN } from '../constants';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define( 'User', {
@@ -58,3 +58,4 @@ module.exports = (sequelize, DataTypes) => {
   };
   return User;
 };
+

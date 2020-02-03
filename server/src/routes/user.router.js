@@ -1,24 +1,33 @@
-import express from 'express';
-import { createUser, updateUserByPk, getUserByPk, deleteUserByPk} from '../controllers/user.controller.js';
-import {
-  validateUserOnCreate,
-  validateUserOnUpdate
-} from '../middlewares/user/validateUser.js';
+import express                                                     from 'express';
+import { createUser, deleteUserByPk, getUserByPk, updateUserByPk } from '../controllers/user.controller.js';
+import createValidationMW
+                                                                   from '../middlewares/validation/createValidationMW.js';
+import schemas                                                     from '../utils/validation';
+import checkPermissions                                            from '../middlewares/permission/checkPermissions.js';
+import { ACTION, ENTITY }                                          from '../constants';
 
 const userRouter = express.Router();
 
-userRouter.post('/',
-                validateUserOnCreate,
-                createUser
+const checkUserPermissions = checkPermissions( ENTITY.USER );
+
+userRouter.post( '/',
+                 checkUserPermissions( ACTION.CREATE ),
+                 createValidationMW( schemas.userSchema )(),
+                 createUser
+);
+userRouter.patch( '/:userId',
+                  checkUserPermissions( ACTION.UPDATE ),
+                  createValidationMW( schemas.userSchema )( false ),
+                  updateUserByPk
+);
+userRouter.get( '/:userId',
+                checkUserPermissions( ACTION.READ ),
+                getUserByPk
 );
 
-userRouter.patch('/:userId',
-                 validateUserOnUpdate,
-                 updateUserByPk
+userRouter.delete( '/:userId',
+                   checkUserPermissions( ACTION.DELETE ),
+                   deleteUserByPk
 );
-
-userRouter.get('/:userId', getUserByPk);
-
-userRouter.delete('/:userId', deleteUserByPk);
 
 export default userRouter;

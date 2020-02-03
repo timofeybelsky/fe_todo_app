@@ -10,18 +10,18 @@ const passwordSchema = Joi.string()
                           .pattern( PASSWORD_PATTERN );
 
 export default Joi.object( {
-                             firstName: nameSchema.when( '$isCreateMode', {
+                             firstName: nameSchema.label( 'First name' ).when( '$isCreateMode', {
                                then: nameSchema.required(),
                              } ),
-                             lastName: nameSchema.when( '$isCreateMode', {
+                             lastName: nameSchema.label( 'Last name' ).when( '$isCreateMode', {
                                then: nameSchema.required(),
                              } ),
-                             email: emailSchema,
-                             login: loginSchema.when( '$isCreateMode', {
+                             email: emailSchema.label( 'Email' ).optional(),
+                             login: loginSchema.label( 'Login' ).when( '$isCreateMode', {
                                then: loginSchema.required(),
                              } ),
-                             password: passwordSchema.when( '$isCreateMode', {
+                             password: passwordSchema.label( 'Password' ).when( '$isCreateMode', {
                                then: passwordSchema.required(),
                              } ),
-
                            } ).min( 1 ).max( 5 );
+

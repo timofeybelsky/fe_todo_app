@@ -9,6 +9,7 @@ import { ACTION, ENTITY }                                          from '../cons
 const userRouter = express.Router();
 
 const checkUserPermissions = checkPermissions( ENTITY.USER );
+const createUserValidationMW  = createValidationMW(schemas.userSchema);
 
 userRouter.post( '/',
                  checkUserPermissions( ACTION.CREATE ),

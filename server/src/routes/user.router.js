@@ -12,12 +12,12 @@ const checkUserPermissions = checkPermissions( ENTITY.USER );
 
 userRouter.post( '/',
                  checkUserPermissions( ACTION.CREATE ),
-                 createValidationMW( schemas.userSchema )(),
+                 createValidationMW( schemas.userSchema )( ACTION.CREATE ),
                  createUser
 );
 userRouter.patch( '/:userId',
                   checkUserPermissions( ACTION.UPDATE ),
-                  createValidationMW( schemas.userSchema )( false ),
+                  createValidationMW( schemas.userSchema )( ACTION.UPDATE ),
                   updateUserByPk
 );
 userRouter.get( '/:userId',

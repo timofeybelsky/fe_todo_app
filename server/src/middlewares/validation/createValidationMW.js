@@ -3,13 +3,15 @@
  * @param {Joi} schema
  * @return {function(*=): function(...[*]=)}
  */
+import { ACTION } from '../../constants';
+
 export default function createValidationMW (schema) {
-  return (isCreateMode = true) => {
+  return (action = ACTION.CREATE) => {
     return async (req, res, next) => {
       try {
         req.body = await schema.validateAsync( req.body, {
           context: {
-            isCreateMode,
+            isCreateMode: action === ACTION.CREATE
           }
         } );
         next();

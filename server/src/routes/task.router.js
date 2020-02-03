@@ -2,29 +2,29 @@ import express            from 'express';
 import createValidationMW from '../middlewares/validation/createValidationMW.js';
 import schemas            from '../utils/validation';
 import TaskController     from '../controllers/task.controller.js';
-import checkPermissions   from '../middlewares/permission/checkPermissions.js';
+import createPermissionMW from '../middlewares/permission/createPermissionMW.js';
 import { ACTION, ENTITY } from '../constants';
 
 const taskRouter = express.Router();
 
-const checkTaskPermissions = checkPermissions( ENTITY.TASK );
+const createTaskPermissionMW = createPermissionMW( ENTITY.TASK );
 
 taskRouter.post( '/',
-                 checkTaskPermissions( ACTION.CREATE ),
+                 createTaskPermissionMW( ACTION.CREATE ),
                  createValidationMW( schemas.taskSchema )(),
                  TaskController.createTask,
 );
 taskRouter.get( '/:taskId',
-                checkTaskPermissions( ACTION.READ ),
+                createTaskPermissionMW( ACTION.READ ),
                 TaskController.getTask
 );
 taskRouter.patch( '/:taskId',
-                  checkTaskPermissions( ACTION.UPDATE ),
+                  createTaskPermissionMW( ACTION.UPDATE ),
                   createValidationMW( schemas.taskSchema )( ACTION.UPDATE ),
                   TaskController.updateTask
 );
 taskRouter.delete( '/:taskId',
-                   checkTaskPermissions( ACTION.DELETE ),
+                   createTaskPermissionMW( ACTION.DELETE ),
                    TaskController.deleteTask
 );
 

@@ -2,17 +2,18 @@
 import { ROLE } from '../constants';
 
 module.exports = (sequelize, DataTypes) => {
-  const Role = sequelize.define('Role', {
+  const Role = sequelize.define( 'Role', {
     name: {
-      type: DataTypes.ENUM(...Object.values(ROLE)),
+      type: DataTypes.ENUM( ...Object.values( ROLE ) ),
       allowNull: false,
       unique: true,
     }
-  }, {});
+  }, {} );
   Role.associate = function (models) {
-    Role.belongsToMany(models.User, {
+    Role.belongsToMany( models.User, {
       through: 'UserRoles',
-    });
+
+    } );
   };
   return Role;
 };

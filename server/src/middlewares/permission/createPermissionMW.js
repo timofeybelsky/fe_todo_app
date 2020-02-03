@@ -2,8 +2,8 @@ import appErrors from '../../utils/applicationErrors';
 
 /**
  *
- * @param {EntityType} entity
- * @return {function(action:ActionType): function(...[*]=)}
+ * @param entity
+ * @return {function(*): function(...[*]=)}
  */
 export default (entity) => {
   return (action) => {

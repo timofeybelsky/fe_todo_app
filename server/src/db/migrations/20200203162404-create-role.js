@@ -1,7 +1,9 @@
 'use strict';
+import { ROLE } from '../../constants';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Roles', {
+    return queryInterface.createTable( 'Roles', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,7 +11,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM( ...Object.values( ROLE ) ),
+        unique: true,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -19,9 +23,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    } );
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Roles');
+    return queryInterface.dropTable( 'Roles' );
   }
 };
